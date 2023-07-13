@@ -1,0 +1,70 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+
+<Meta title="Elements/Iconography" />
+
+<style>
+  {`
+.icon-sample {
+  display: flex;
+  flex-direction: row;
+  max-width: 15em;
+  line-height: 20px;
+  min-height: 2em;
+}
+.icon-sample .name {
+  display: flex;
+  flex: 1;
+}
+.icon-sample span {
+  height: 20px;
+  width: 20px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.dark {
+  background-color: var(--tm_neutral_600)
+}
+
+`}
+</style>
+
+# TravisMathew Iconography
+
+All available app icons are defined in the `/styles/global/variables.scss` file and defined as CSS variables comprised of an SVG each. They can be added to any HTML element, like: `<span className="tm-us-flag"></span>`
+
+<br />
+<br />
+### General icons (CSS variables)
+
+<Unstyled>
+  <div className="icon-sample">
+    <span className="name">--tm-us-flag:</span> <span className="tm-us-flag"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-ca-flag:</span> <span className="tm-ca-flag"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-minus:</span> <span className="tm-minus dark"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-plus:</span> <span className="tm-plus dark"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-chevron:</span>{" "}
+    <span className="tm-chevron dark"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-pin:</span> <span className="tm-pin"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-user:</span> <span className="tm-user"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-cart:</span> <span className="tm-cart"></span>
+  </div>
+  <div className="icon-sample">
+    <span className="name">--tm-search:</span> <span className="tm-search"></span>
+  </div>
+</Unstyled>

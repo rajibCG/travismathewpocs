@@ -1,0 +1,163 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+
+<Meta title="Docs/Project Structure" />
+
+# Project Structure
+
+This structure document provides an in-depth look at the file and folder structure of the TravisMathew website codebase.
+This document is intended for developers who are new to the TravisMathew codebase and need guidance on how to navigate its structure.
+
+This is the file structure of our project:
+
+```text
+│── components/
+│ ├── Sitewide/
+│ │ ├── Header
+│ │ ├── Footer
+│ │ ├── Portrait Card
+│ │ ├── Landscape Card
+│ │ ├── Full Width Banner
+│ │ ├── Short Banner
+│ │ ├── Section Heading
+│ │ ├── Half Width Banner and Text
+│ │ ├── Rewards Banner
+│ │ ├── Video and Text Banner
+│ │ ├── UGC Carousel
+│ │ ├── Banner Carousel
+│ │ ├── Accordion Content
+│ │ ├── Subscription Banner
+│ │ └── Blog Carousel
+│ ├── PDP/
+│ │ ├── PDP Product Configuration Form
+│ │ ├── PDP Product Technology Details
+│ │ ├── PDP Product Image Gallery
+│ │ └── PDP Related Products
+│ └── Cart/
+│ ├── Cart Product List
+│ ├── Cart Help Information
+│ ├── Cart Order Summary
+│ └── Cart Retail Location
+│── pages/
+│── public/
+│── reducers/
+│── store/
+│── stories/
+│── storybook-static/
+│── styles/
+│── .env.local
+│── .eslintrc.json
+│── next.config.js
+├── package.json
+├── README.md
+└── ...
+```
+
+## `/components/`
+
+The `/components/` folder contains all the React components used in the project, separated by folders that define where the component can be used (eg: Sitewide, PDP, PLP, etc)
+
+### Component list:
+
+- `components`
+  - Sitewide
+    - [Header](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=179%3A762&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Footer](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=179%3A762&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Portrait Card](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=190%3A3795&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Landscape Card](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=190%3A4182&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Full Width Banner](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=262%3A5731&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Short Banner](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=190%3A4748&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Section Heading](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2012%3A51402&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Half Width Banner and Text](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=242%3A6363&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Rewards Banner](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2012%3A50325&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Video and Text Banner](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=1694%3A36252&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [UGC Carousel](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2155%3A47891&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Banner Carousel](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2012%3A51416&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Accordion Content](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2012%3A51423&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Subscription Banner](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2627%3A7811&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Blog Carousel](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=190%3A4838&mode=design&t=EbvV29pAe67uLrB3-1)
+  - PDP
+    - [PDP Product Configuration Form](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2012%3A51409&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [PDP Product Technology Details](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2111%3A46546&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [PDP Product Image Gallery](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=2111%3A46574&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [PDP Related Products](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=692%3A40495&mode=design&t=EbvV29pAe67uLrB3-1)
+  - Cart
+    - [Cart Product List](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=0%3A1&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Cart Help Information](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=0%3A1&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Cart Order Summary](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=0%3A1&mode=design&t=EbvV29pAe67uLrB3-1)
+    - [Cart Retail Location](https://www.figma.com/file/6eS2lWFNlyu8xA6Pg0bU1r/TM-Design-Library?type=design&node-id=0%3A1&mode=design&t=EbvV29pAe67uLrB3-1)
+
+## `/pages/`
+
+The `pages` directory is a key feature of a Next.js project, and it serves a specific purpose in the framework's routing system. Essentially, the `pages` directory is where we create our individual pages for our Next.js application.
+
+In Next.js, each file that we create in the `pages` directory becomes a page that can be accessed by users via a specific URL. For example, if we create a file called `about.js` in the `pages` directory, it will become a page accessible at the `/about` URL path. Similarly, if we create a file called `contact.js`, it will become a page accessible at the `/contact` URL path.
+
+By default, Next.js uses file-based routing, which means that the file structure in our `pages` directory defines the URL structure of our application. This makes it easy to create and organize pages in our application and ensures that our routing is clear and understandable.
+
+In addition to creating our pages, the `pages` directory also allows us to use dynamic routes and create custom server-side pages. For example, we can create a dynamic route by using square brackets in the file name, like `[id].js`, which would allows us to create pages with different URLs based on a dynamic parameter.
+
+Overall, the `pages` directory is a fundamental part of a Next.js project, allowing us to create pages and define their URLs in a simple and intuitive way. By using this directory effectively, we can create a well-structured and easily navigable application that provides a great user experience.
+
+## `/reducers/`
+
+The `reducers` directory plays a key role when using Redux Toolkit within the context of Storybook. Redux Toolkit is a powerful and streamlined library for managing state in our React applications. In a Redux Toolkit project, the `reducers` directory is where we define and aggregate our slice reducers so that they can be used by Storybook.
+
+A slice reducer is a function that takes the current state of a slice of our application's state and an action, and returns a new state. In other words, slice reducers define how the state of a specific portion of our application should be updated in response to different actions.
+
+## `/store/slices/`
+
+The `store/slices` folder is another key directory in a Redux Toolkit project. This folder is typically used to organize our slice reducers into reusable and self-contained modules, often referred to as "slices."
+
+In Redux Toolkit, a slice is simply a collection of related state, actions, and reducers that can be combined to form a larger application state. Each slice typically contains its own reducer function that handles updates to its portion of the state.
+
+By separating our slice reducers into individual modules in the `store/slices` folder, you can create a modular and scalable state management system for our application. This makes it easier to manage the complexity of our state, especially as our application grows in size and complexity.
+
+In addition, organizing our slice reducers into modules allows us to easily reuse them across different parts of our application. For example, if you have a user slice that handles authentication and user profile data, you can easily import and use that slice in different parts of our application that need access to that data.
+
+## `/stories/`
+
+The `/stories` folder is an important component of a Storybook project. This folder contains stories, which are individual files that define how our components are displayed and interacted with in the Storybook UI.
+
+Each story is typically defined in its own file within the `/stories` directory, and follows a specific naming convention to ensure that it is automatically discovered and loaded by Storybook.
+
+The purpose of the `/stories` folder is to provide a centralized location for defining and organizing the stories for our components. By separating our stories into individual files, we can easily find, modify, and test the different variations of our components in isolation.
+
+In addition, the `/stories` folder provides a powerful testing tool for our components. By creating stories for our components, we can quickly and easily test how they look and behave in different scenarios and with different input data. This can help us catch bugs and edge cases early in the development process, and ensure that our components are working as intended.
+
+## `/storybook-static/`
+
+The `storybook-static` folder is a directory that is automatically generated by Storybook when we build the Storybook project. It contains a static HTML and JavaScript version of your Storybook, which can be deployed to a web server or shared with others.
+
+## `/styles/`
+
+The `/styles` folder is a directory commonly used in front-end web development projects to store stylesheets that define the visual appearance and layout of a website or application. In a Next.js project, we use the `/styles` folder for a similar purpose.
+
+By default, Next.js provides support for global styles and CSS modules, which allows us to write styles in a modular and reusable way. The `/styles` folder is where we define our global styles and CSS modules, using either plain CSS files or preprocessors like Sass or Less.
+
+The `/styles` folder can also be used to define additional styling configuration, such as theme variables or custom styling utilities. These files can be imported into our component stylesheets as needed, allowing us to create a consistent and reusable set of styles across our application.
+
+## `.env.local`
+
+The `.env.local` file is a special file used in a Next.js project that allows us to define environment variables that are specific to our local development environment. These variables can be used to store sensitive information like API keys, database credentials, or other configuration options that should not be committed to version control.
+
+When we create a `.env.local` file in the root of our Next.js project, the variables defined in the file will be automatically loaded into our application at runtime, making them available to our server-side and client-side code.
+
+For example, we could define a variable called `API_KEY` in our `.env.local` file like this:
+
+```
+API_KEY=my-secret-api-key
+```
+
+Then, in our Next.js code, we could access this variable using the `process.env` object:
+
+```javascript
+const apiKey = process.env.API_KEY;
+```
+
+This makes it easy to keep our sensitive information separate from our codebase, and allows us to easily switch between different environments (such as development, staging, and production) without having to manually update our configuration each time.
+
+It's important to note that the `.env.local` file should never be committed to version control, as it contains sensitive information that could be exposed if it falls into the wrong hands. Instead, we should use a tool like `.gitignore` to ensure that the file is not included in our repository.
+
+## `next.config.js`
+
+The `next.config.js` file is a configuration file used in Next.js projects to customize the behavior of the Next.js build process. This file can be used to modify various aspects of the project, such as webpack configuration, customizing server-side rendering behavior, defining environment variables, and more.

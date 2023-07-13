@@ -1,0 +1,237 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/CSS Methodology" />
+
+<style>
+  {`
+    .subheading {
+      --mediumdark: '#999999';
+      font-weight: 700;
+      font-size: 13px;
+      color: #999;
+      letter-spacing: 6px;
+      line-height: 24px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 40px;
+    }
+
+    .link-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 620px) {
+      .link-list {
+        row-gap: 20px;
+        column-gap: 20px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media all and (-ms-high-contrast:none) {
+    .link-list {
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr;
+        -ms-grid-rows: 1fr 1fr;
+      }
+    }
+
+    .link-item {
+      display: block;
+      padding: 20px;
+      border: 1px solid #00000010;
+      border-radius: 5px;
+      transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+      color: #333333;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .link-item:hover {
+      border-color: #1EA7FD50;
+      transform: translate3d(0, -3px, 0);
+      box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+    }
+
+    .link-item:active {
+      border-color: #1EA7FD;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .link-item strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .link-item-img-wrapper {
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+      flex: none;
+    }
+
+    .link-item span,
+    .link-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .tip {
+      display: inline-block;
+      border-radius: 1em;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 700;
+      background: #E7FDD8;
+      color: #66BF3C;
+      padding: 4px 12px;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+
+    .tip-wrapper {
+      font-size: 13px;
+      line-height: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .tip-wrapper code {
+      font-size: 12px;
+      display: inline-block;
+    }
+  `}
+</style>
+
+# CSS Methodology
+
+We're building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+
+To promote a modular and reusable approach to writing CSS code, we'll use the Object-Oriented CSS (OOCSS) methodology, which promotes a modular and reusable
+approach to writing CSS code. It focuses on separating the structure (objects) from the visual styles (skins) applied to them.
+
+Here are the key concepts of OOCSS:
+
+<b>Objects:</b> In OOCSS, an object refers to a reusable CSS class that represents
+a generic component or element on a webpage. Instead of styling a specific instance
+of an element, you create a class that can be applied to different elements with
+similar structure and behavior. For example, you might create a .btn class to represent
+a button, which can be used on multiple buttons throughout our website.
+
+<b>Skins:</b> Skins, also known as themes or styles, represent the visual presentation
+of an object. They include colors, typography, backgrounds, and other visual properties.
+By separating the skin from the object itself, you can reuse the same object with
+different styles applied to it. For instance, you could have a default skin for buttons
+and alternative skins for special occasions or different sections of our website.
+
+<b>Reusability:</b> OOCSS encourages creating CSS classes that are independent of
+specific elements. This allows you to reuse those classes across different elements
+with similar structure and behavior. For example, if you have multiple sections with
+a similar layout, you can create a generic section class and apply it to each section,
+reducing the amount of repetitive CSS code.
+
+<b>Modularity: </b> OOCSS promotes breaking down CSS styles into smaller, modular
+components. This modular approach makes it easier to manage and maintain your stylesheets.
+Instead of writing lengthy, specific selectors for each element, you create reusable
+classes that can be combined to create complex components. This way, you can easily
+update or modify styles without affecting unrelated parts of our website.
+
+The main idea behind OOCSS is to create reusable and modular CSS classes that separate structure (objects) from visual styles (skins). This approach improves code maintainability, reduces redundancy, and promotes a more efficient development process. By leveraging the power of objects and skins, you can create consistent and flexible CSS code that can be easily applied and reused throughout our website.
+
+<b>
+  It's crucial to be mindful of the CSS specificity while we're writing code
+  becuase otherwise, over time, the codebase will get unruly and hard to
+  maintain. Elements shouldn't have specificity (combination of classes) over 4
+  levels deep eg: ```.class1 .class2 .class3 .class4 ``` . Please try to build
+  your css with as little css as possible.
+</b>
+<b>
+  {" "}
+  The use of ```!important ``` is forbidden, and will approved on a case-by-case
+  basis, but essentially if you're having to write an ```!important ``` to get your
+  styles to work, that means that that element or component is a perfect candidate
+  for refactoring. The reason behind this, is that using the important property is
+  really a quick fix that in turn creates technical debt, as it will make our components
+  extremely hard to maintain.
+</b>
+
+### Examples
+
+In this example, we have a button object represented by the .btn class. It defines the core structure and behavior of a button, such as display, padding, and text alignment. Then, we define different skins for the button using additional classes like .btn-primary and .btn-secondary. These classes specify the background color and text color for different button styles.
+
+```
+/* Object */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Skins */
+.btn primary {
+  background-color: blue;
+  color: white;
+}
+
+.btn secondary {
+  background-color: gray;
+  color: black;
+}
+
+```
+
+In this second example,e have an alert object represented by the .alert class. It defines the common properties for an alert component, such as padding, border, and border radius. Then, we define different skins for alerts using classes like .alert-success and .alert-error. These classes specify the background color and border color for different types of alerts.
+
+```
+/* Object */
+.alert {
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+/* Skins */
+.alert success {
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.alert error {
+  background-color: lightcoral;
+  border-color: red;
+}
+
+```
+
+### Semantic css
+
+Semantic CSS refers to the practice of writing CSS code in a way that reflects the underlying semantic structure and meaning of the HTML markup. In other words, it involves assigning class names and selectors based on the purpose and content of the elements rather than their visual appearance.
+
+The primary goal of semantic CSS is to enhance the maintainability, reusability, and accessibility of a website or web application. By using semantic class names, developers can create a more intuitive and understandable codebase. Instead of relying on generic class names like "blue" or "bold" that describe the visual styling, semantic CSS encourages the use of class names that describe the purpose or function of the elements, such as "header," "nav," "button," or "form-input." This approach makes the code more self-explanatory and easier to navigate, especially for other developers who might work on the same project in the future.
+
+Furthermore, semantic CSS contributes to improved maintainability. When the visual design needs to be updated or changed, developers can modify the CSS styles without altering the HTML structure. This separation of concerns allows for quicker and more targeted updates, reducing the risk of introducing unintended side effects.
+
+### Conventions for internal component wrappers
+
+When we need to create an internal wrapper inside an element, let's avoid using the word `.wrapper` or `.container`. Instead, simply use the suffix `-w1`, `-w2`, `-w3`.
+For example:
+
+```
+<nav class="footer">
+  <div class="footer-w1">
+    This is the outermost or first wrapper
+    <div class="footer-w2">
+     <div class="footer-w3">
+      additional wrappers, as needed
+     </div>
+    </div>
+  </div>
+</nav>
+```

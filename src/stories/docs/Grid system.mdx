@@ -1,0 +1,96 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { Story } from "@storybook/react";
+
+<Meta title="Docs/Grid" />
+
+<style>
+  {`
+.type {
+  display: flex; flex-direction: column; margin-top: 4em; position: relative; border-top: 1px solid #eaeaea;
+}
+.type-example {
+  display: flex; flex-direction:row; margin-bottom: 0em; padding-top: 2.2em;
+}
+.type-example:before {
+  position: absolute; width: 100%; top: 0; font-weight: 500;
+}
+.type-example.h1:before { content: "h1"; }
+.type-example.h2:before { content: "h2"; }
+.type-example.h3:before { content: "h3"; }
+.type-example.h4:before { content: "h4"; }
+.type-example.h5:before { content: "h5"; }
+.type-example.h6:before { content: "h6"; }
+.type-example.product-name:before { content: "Product name"; }
+
+.grid-sample {
+    background: #f5f7f8;
+    width: 100%;
+    overflow: visible;
+    position: absolute;
+    left: 0;
+    padding: 0 15%;
+    .sample-cell {
+        background: #e9eaeb;
+        padding: 1em;
+        text-align: center;
+        font-size: .8em;
+        &.active {
+
+        background: #bfd0e4;
+        }
+    }
+}
+
+
+`}
+</style>
+
+# Grid system
+
+We leverage Tailwind's CSS grid for column alignment -- however, we want to use Tailwind ONLY for the grid system, and not use Tailwind for anything else on this project (everything else should be custom CSS code)
+
+Tailwind's CSS grid system allows us to create responsive and well-structured layouts effortlessly.
+With just a few utility classNamees, we can craft complex grid structures. The grid system is built on top of CSS Grid, a powerful native browser feature that allows for precise control over grid layouts.
+
+Check out the [Tailwind CSS documentation ](https://tailwindcss.com/docs/grid-template-columns) for grid-template-columns
+
+<br />
+<br />
+## Example
+<Unstyled>
+  <div className="grid-sample">
+    <div className="w-full lg:grid lg:grid-cols-12 gap-8">
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-span-5">lg:col-span-5</div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-span-3">lg:col-span-3</div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-span-2">lg:col-span-2</div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-span-5">lg:col-span-5</div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-span-4">lg:col-span-4</div>
+      <div className="sample-cell active lg:col-span-6">lg:col-span-6</div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell active lg:col-start-3 lg:col-span-4 row-start-2 row-end-5">
+        lg:col-start-3 lg:col-span-4 row-start-2 row-end-5
+      </div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+      <div className="sample-cell"></div>
+    </div>
+  </div>
+</Unstyled>
