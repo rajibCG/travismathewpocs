@@ -99,7 +99,7 @@ export const authOptions = {
                 );
 
                 tokenResponse = await res.json();
-                console.log(tokenResponse)
+                // console.log(tokenResponse)
             } catch (ex) {
                 // throw new Error('some error occuring')
                 console.log(ex)
