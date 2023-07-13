@@ -25,11 +25,6 @@ function Header() {
                 ) : (
                     <>
                         <Signup />
-                        {/* <Link
-                            href="/signup"
-                        >
-                            Sign Up
-                        </Link> */}
                         <p>/</p>
                         <Link
                             href="/login"

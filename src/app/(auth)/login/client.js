@@ -38,7 +38,7 @@ export default function SignIn({ csrftoken }) {
             setError(null);
           }
           if (res.url) {
-            successMsg("You are successfully loggedin.");
+            successMsg("You are successfully logged in.");
             router.push("/");
           }
           setSubmitting(false);

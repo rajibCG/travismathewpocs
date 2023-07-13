@@ -36,7 +36,7 @@ export default function Signup() {
     return (
         <>
             <button type="button" onClick={handleSignup}>
-                Signup
+                Join
             </button>
             {showModal &&
                 <Modal closeAction={handleSignup}>
@@ -88,7 +88,7 @@ export default function Signup() {
                                 .then(async (res) => {
                                     if (res.isRegistered) {
                                         await makeSignIn(values.email, values.password);
-                                        successMsg("You are successfully loggedin.");
+                                        successMsg("You are successfully logged in.");
                                         resetForm();
                                     } else if (res.message) {
                                         infoMsg(res.message);
@@ -206,7 +206,7 @@ export default function Signup() {
                                         </button>
                                     </div>
                                     <div className="pt-4 font-semibold text-center text-blue-500">
-                                        <Link href="/login" onClick={handleSignup}>Alreday have an account</Link>
+                                        <Link href="/login" onClick={handleSignup}>Already have an account</Link>
                                     </div>
                                 </div>
                             </form>
