@@ -86,14 +86,15 @@ export default function Signup() {
                             })
                                 .then((result) => result.json())
                                 .then(async (res) => {
-                                    if (res.isRegistered) {
-                                        await makeSignIn(values.email, values.password);
-                                        successMsg("You are successfully logged in.");
-                                        resetForm();
-                                    } else if (res.message) {
-                                        infoMsg(res.message);
-                                    }
-                                    if (res.status === 400) {
+                                    if (res.status === 200) {
+                                        if (res.isRegistered) {
+                                            await makeSignIn(values.email, values.password);
+                                            successMsg("You are successfully logged in.");
+                                            resetForm();
+                                        } else if (res.message) {
+                                            infoMsg(res.message);
+                                        }
+                                    } else if (res.status === 400) {
                                         if (res.data) {
                                             for (let [key, value] of Object.entries(res.data)) {
                                                 if (values[key]) {
