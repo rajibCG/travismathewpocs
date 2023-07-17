@@ -1,3 +1,4 @@
+import { fetchHybrisClientToken } from "@/lib/HybrisMethods";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -78,27 +79,9 @@ export const authOptions = {
                 authData = getObject(token);
                 userEmail = authData.user.account.profile.email
             }
-            const tokenData = new URLSearchParams();
-            tokenData.append("client_id", process.env.HYBRIS_CLIENT_ID);
-            tokenData.append("client_secret", process.env.HYBRIS_CLIENT_SECRET);
-            tokenData.append("grant_type", "client_credentials");
-
-            const fetchOptions = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    grant_type: "client_credentials",
-                },
-                grant_type: "client_credentials",
-                body: tokenData.toString(),
-            };
             try {
-                const res = await fetch(
-                    `${process.env.HYBRIS_API_URL}/authorizationserver/oauth/token`,
-                    fetchOptions
-                );
-
-                tokenResponse = await res.json();
+                const resp = await fetchHybrisClientToken()
+                tokenResponse = resp.response
                 // console.log(tokenResponse)
             } catch (ex) {
                 // throw new Error('some error occuring')

@@ -29,7 +29,7 @@ export default function SignIn({ csrftoken }) {
             redirect: false,
             email: values.email,
             password: values.password,
-            callbackUrl: `/`,
+            //callbackUrl: `/`,
           });
           // console.log(res);
           if (res?.error) {
@@ -39,7 +39,7 @@ export default function SignIn({ csrftoken }) {
           }
           if (res.url) {
             successMsg("You are successfully logged in.");
-            router.push("/");
+            router.push("/TM/TOPS/Polos/BEACHSIDE-STEALTH-POLO/p/1MU428_4VBK_");
           }
           setSubmitting(false);
         }}
