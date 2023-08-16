@@ -3,7 +3,8 @@ export default {
     tabletLandscapte: 768,
     hybrisTokenCookieName: 'b2c-hbris-token',
     cartCookieName: 'b2c-us-cart',
-    //cartCookieCodeName: 'b2c-us-cart-code',
+    cartCookieGuiName: 'b2c-us-cart-gui',
+    userTypeCookieName: 'b2c-us-utype',
     userGroupCookieName: 'b2c-us-AKUS',
     guestUserName: 'anonymous',
 }

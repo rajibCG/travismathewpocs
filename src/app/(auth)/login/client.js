@@ -3,12 +3,14 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { successMsg } from "@/lib/Notification";
 
 export default function SignIn({ csrftoken }) {
   const router = useRouter();
+  const searchParam = useSearchParams();
+  const referar = searchParam.get('referrar')
   const [error, setError] = useState(null);
 
   return (
@@ -39,7 +41,7 @@ export default function SignIn({ csrftoken }) {
           }
           if (res.url) {
             successMsg("You are successfully logged in.");
-            router.push("/TM/TOPS/Polos/BEACHSIDE-STEALTH-POLO/p/1MU428_4VBK_");
+            router.push(referar ? referar : "/");
           }
           setSubmitting(false);
         }}

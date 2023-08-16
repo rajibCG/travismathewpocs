@@ -39,7 +39,10 @@ export const createCart = async (user, token) => {
         const cartResponse = await fetch(
             `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts?fields=DEFAULT`,
             {
-                headers: { Authorization: "Bearer " + token },
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
                 method: 'POST'
             }
         ).then(res => res.json()); ///fetch user cart
@@ -55,22 +58,71 @@ export const createCart = async (user, token) => {
     }
 }
 
+export const mergeCart = async (user, token, oldCartId, toMergeCartGuid) => {
+    const baseUrl = process.env.HYBRIS_API_URL
+    const baseSiteIdentifier = process.env.HYBRIS_BASE_SITE_IDENTIFIER
+    try {
+        const cartResponse = await fetch(
+            `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts?fields=DEFAULT`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    oldCartId,//Anonymous cart GUID.
+                    toMergeCartGuid //The GUID of the user's cart
+                })
+            }
+        ).then(res => res.json()); ///fetch user cart
+        if (cartResponse.errors) {
+            return {
+                status: 404,
+                response: cartResponse
+            }
+        } else {
+            return {
+                status: 200,
+                response: cartResponse
+            }
+        }
+    } catch (ex) {
+        return {
+            status: 400,
+            response: ex.message || 'Error in fetching'
+        }
+    }
+}
+
+
 export const retriveCart = async (user, token) => {
-    const baseUrl = process.env.APP_HYBRIS_API_URL
+    const baseUrl = process.env.HYBRIS_API_URL
     const baseSiteIdentifier = process.env.HYBRIS_BASE_SITE_IDENTIFIER
     try {
         const ress = await fetch(
             `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts?fields=DEFAULT`,
             {
-                headers: { Authorization: "Bearer " + token },
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
                 method: 'GET'
             }
         ).then(res => res.json());
 
-        return {
-            status: 200,
-            response: ress
+        if (ress.errors) {
+            return {
+                status: 404,
+                response: ress
+            }
+        } else {
+            return {
+                status: 200,
+                response: ress
+            }
         }
+
     } catch (ex) {
         return {
             status: 400,
@@ -86,15 +138,25 @@ export const retriveCartWithIdentifier = async (user, cardId, token) => {
         const ress = await fetch(
             `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts/${cardId}?fields=DEFAULT`,
             {
-                headers: { Authorization: "Bearer " + token },
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
                 method: 'GET'
             }
         ).then(res => res.json());
-
-        return {
-            status: 200,
-            response: ress
+        if (ress.errors) {
+            return {
+                status: 404,
+                response: ress
+            }
+        } else {
+            return {
+                status: 200,
+                response: ress
+            }
         }
+
     } catch (ex) {
         return {
             status: 400,
@@ -111,7 +173,10 @@ export const AddProductToCart = async ({ user, cardId, token, product }) => {
         const res = await fetch(
             `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts/${cardId}/entries?fields=DEFAULT`,
             {
-                headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
                 method: 'POST',
                 body: JSON.stringify(product)
             }
@@ -138,6 +203,43 @@ export const AddProductToCart = async ({ user, cardId, token, product }) => {
 }
 
 
+export const UpdateProductQtyToCart = async ({ user, cardId, token, product, entryNumber }) => {
+    const baseUrl = process.env.HYBRIS_API_URL
+    const baseSiteIdentifier = process.env.HYBRIS_BASE_SITE_IDENTIFIER
+
+    try {
+        const res = await fetch(
+            `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts/${cardId}/entries/${entryNumber}?fields=DEFAULT`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                method: 'PATCH',
+                body: JSON.stringify(product)
+            }
+        ).then(res => res.json());
+        if (res.errors) {
+            return {
+                status: 400,
+                errorMsg: res?.errors[0]?.type === "InsufficientStockError" ? 'Product cannot be shipped - out of stock online' : 'Please try agin later.Something went wrong.',
+                response: res
+            }
+        } else {
+            return {
+                status: 200,
+                response: res
+            }
+        }
+
+    } catch (ex) {
+        return {
+            status: 400,
+            response: ex.message || 'Error in fetching'
+        }
+    }
+}
+
 export const getCartEntries = async ({ user, cardId, token }) => {
     const baseUrl = process.env.HYBRIS_API_URL
     const baseSiteIdentifier = process.env.HYBRIS_BASE_SITE_IDENTIFIER
@@ -145,7 +247,10 @@ export const getCartEntries = async ({ user, cardId, token }) => {
         const ress = await fetch(
             `${baseUrl}/restv2/v2/${baseSiteIdentifier}/users/${user}/carts/${cardId}/entries?fields=DEFAULT`,
             {
-                headers: { Authorization: "Bearer " + token },
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
                 method: 'GET'
             }
         ).then(res => res.json());

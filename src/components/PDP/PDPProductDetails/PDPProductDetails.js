@@ -1,8 +1,8 @@
 "use client";
 
 import Loader from "@/components/Sitewide/ButtonLoader/Loader";
-import { clearMsg, errorMsg } from "@/lib/Notification";
-import { setCartCount, setCartItems, setCartLoader } from "@/reducers/slices/CartSlice";
+import { clearMsg, errorMsg, successMsg } from "@/lib/Notification";
+import { fetchCartData, setCartItems, setCartLoader } from "@/reducers/slices/CartSlice";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -10,16 +10,18 @@ import { useDispatch, useSelector } from "react-redux";
 import PDPColorList from "../PDPProductConfigurationForm/PDPColorList";
 
 const PDPProductDetails = ({ productId, producturl, title, price, bloomreachData, hybrisData }) => {
-    console.log(hybrisData)
+    // console.log(hybrisData)
     const params = useParams()
     const dispatch = useDispatch()
     const cartData = useSelector(state => state.cart)
     const siteLang = "en-US";
+    const productCode = params.id;
     const productSizing = bloomreachData?.facet_counts?.facet_fields?.Sizes
     const productColors = hybrisData?.baseOptions[0]?.options
     const selectedproductColorCode = hybrisData?.baseOptions[0]?.selected?.code
-    const selectedSize = params.id.substring(productId.length)
+    const selectedSize = productCode.substring(productId.length)
     const description = hybrisData?.description
+
 
     const sizeList = productSizing?.map((size, i) => (
         <li key={i} className="col-span-1 pdp-product-details-w2">
@@ -27,45 +29,68 @@ const PDPProductDetails = ({ productId, producturl, title, price, bloomreachData
         </li>
     ));
     const colorList = productColors?.map((colorOption, i) => (
-        <PDPColorList key={i} option={colorOption} selected={selectedproductColorCode} />
+        <PDPColorList key={i} option={colorOption} sizeOption={selectedSize} selected={selectedproductColorCode} />
     ));
 
+    const checkTheProductHasInCart = () => {
+        for (let i = 0; i < cartData.itemListing.length; i++) {
+            const entry = cartData.itemListing[i]
+
+            if (entry.product.code === productCode) {
+                return {
+                    status: true,
+                    entryNumber: i,
+                    quantity: entry.quantity
+                };
+            }
+        }
+        return {
+            status: false,
+            entryNumber: null,
+            quantity: 0
+        };
+    }
+
     const addToCart = async () => {
+        const { status, entryNumber, quantity } = checkTheProductHasInCart()
         dispatch(setCartLoader(true))
         clearMsg()
         const productToAdd = {
-            code: productId,
+            code: productCode,
             name: title,
             price: {
                 currencyIso: "USD",
                 value: price,
             },
             product: {
-                code: productId,
+                code: productCode,
             },
-            promotionPrice: {
-                currencyIso: "USD",
-                value: 0,
-            },
+            // promotionPrice: {
+            //     currencyIso: "USD",
+            //     value: 0,
+            // },
             purchasable: true,
             stock: {},
             url: producturl,
+            quantity: quantity + 1
         };
-        dispatch(setCartItems([productToAdd]))
-        // const result = await fetch('/api/occ/cart', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         user: cartData.useremail,
-        //         token: cartData.token,
-        //         guid: cartData.guid,
-        //         product: productToAdd
-        //     })
-        // }).then(res => res.json())
-        // if (result.status === 200) {
-        //     dispatch(setCartItems([productToAdd]))
-        // } else {
-        //     errorMsg(result.errorMsg ? result.errorMsg : 'Please try agin later.Something went wrong.')
-        // }
+        // dispatch(setCartItems([productToAdd]))
+        const response = await fetch('/api/occ/cart', {
+            method: status ? 'PATCH' : 'POST',
+            body: JSON.stringify({
+                user: cartData.useremail,
+                token: cartData.token,
+                guid: cartData.guid,
+                product: productToAdd,
+                entryNumber
+            })
+        }).then(res => res.json())
+        if (response.result.status === 200) {
+            dispatch(fetchCartData())
+            successMsg('Product added to cart successfully.')
+        } else {
+            errorMsg(response.errorMsg ? response.errorMsg : 'Please try agin later.Something went wrong.')
+        }
         dispatch(setCartLoader(false))
     }
     //sizeAndFitDescription

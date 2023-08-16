@@ -5,45 +5,50 @@ import Link from 'next/link';
 import Signup from '../Auth/Signup';
 import Cart from '@/components/Cart/CartHelpInformation/Cart';
 import configuration from '@/constants/configuration';
-import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { setCartCount, setCartGuid, setCartItems, setCartToken, setCartUserEmail } from '@/reducers/slices/CartSlice';
+import { fetchCartData, setCartGuid, setCartToken, setCartUserEmail } from '@/reducers/slices/CartSlice';
+import { usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 function Header() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    const pathName = usePathname()
     const dispatch = useDispatch();
     const userEmail = session?.user.email ? session.user.email : configuration.guestUserName
+
     const fetchHybrisToken = async () => {
         const response = await fetch('/api/occ/token', { method: 'POST' }).then(res => res.json());
         if (response.status === 200) {
             localStorage.setItem(configuration.hybrisTokenCookieName, response.response.access_token)
-
             dispatch(setCartToken(response.response.access_token))
             dispatch(setCartUserEmail(userEmail))
-
-            const cardBody = new URLSearchParams();
-            cardBody.append("user", userEmail);
-            cardBody.append("token", response.response.access_token);
-            cardBody.append("guid", Cookies.get(configuration.cartCookieName));
-            const resp = await fetch(`/api/occ/cart?${cardBody.toString()}`, { method: 'GET' })
-                .then(res => res.json())
-            if (resp.response) {
-                const CartGuid = userEmail !== configuration.guestUserName ? resp.response.code : resp.response.guid;
-                Cookies.set(configuration.cartCookieName, CartGuid, {
+            dispatch(fetchCartData()).then(res => {
+                console.log(res)
+                Cookies.set(configuration.userTypeCookieName, userEmail !== configuration.guestUserName ? 'user' : configuration.guestUserName, {
                     expires: 7,
                 })
-                const { totalItem, entries } = resp.response
-                dispatch(setCartGuid(CartGuid))
-                dispatch(setCartCount(totalItem))
-                dispatch(setCartItems(entries))
-            }
+            })
 
         }
     }
 
     useEffect(() => {
-        fetchHybrisToken()
-    }, [userEmail]);
+        if (status !== 'loading') {
+            fetchHybrisToken()
+        }
+
+    }, [userEmail, status]);
+
+    const logout = async () => {
+        dispatch(setCartGuid(null))
+        Cookies.set(configuration.cartCookieName, null, {
+            expires: 7,
+        })
+        Cookies.set(configuration.cartCookieGuiName, null, {
+            expires: 7,
+        })
+        signOut("credentials");
+    }
 
     return (
         <section className='header pt-3'>
@@ -59,7 +64,7 @@ function Header() {
                         <button
                             type="button"
                             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-                            onClick={() => signOut("credentials")}
+                            onClick={logout}
                         >
                             Sign out
                         </button>
@@ -69,7 +74,7 @@ function Header() {
                         <Signup />
                         <p>/</p>
                         <Link
-                            href="/login"
+                            href={`/login${pathName === 'login' ? '' : '?referrar=' + encodeURIComponent(pathName)}`}
                         >
                             Login
                         </Link>

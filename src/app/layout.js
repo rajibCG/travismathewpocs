@@ -1,12 +1,12 @@
 import Footer from '@/components/Sitewide/Footer/Footer'
 import Header from '@/components/Sitewide/Header/Header'
 import '@/styles/globals.css'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import AuthProvider from '../components/Provider/AuthProvider'
 import Toaster from '@/components/Notifications/Toaster'
 import StoreProvider from '@/reducers/StoreProvider'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: process.env.NEXT_PUBLIC_APP_NAME,
@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <AuthProvider>
           <StoreProvider>
             <Header />

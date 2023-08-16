@@ -1,6 +1,7 @@
 import { fetchHybrisClientToken } from "@/lib/HybrisMethods";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 let authData = new Object();
 
@@ -88,7 +89,10 @@ export const authOptions = {
                 console.log(ex)
             }
 
-
+            cookies().set({
+                name: 'akug', value: 'user', expires: new Date('2023-10-05'),
+                path: '/', // For all paths
+            })
 
             return {
                 access_token: tokenResponse ? tokenResponse.access_token : "oAdPWoo6pXZFskFbzCJGoDDBQ8k",
@@ -105,6 +109,14 @@ export const authOptions = {
             authData = token?.token?.user?.account;
             return token;
         },
+    },
+    events: {
+        async signOut({ token }) {
+            cookies().set({
+                name: 'akug', value: 'guest', expires: new Date('2023-10-05'),
+                path: '/', // For all paths
+            })
+        }
     },
     secret: process.env.NEXTAUTH_SECRET,
 }
